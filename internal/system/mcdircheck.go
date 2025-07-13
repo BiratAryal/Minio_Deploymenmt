@@ -3,7 +3,7 @@ package system
 import (
 	"fmt"
 	"miniolearn/config"
-	initial "miniolearn/internal/initialsetup"
+	initial "miniolearn/internal/aliassetup"
 	"os"
 	"path/filepath"
 	"runtime"

@@ -10,26 +10,6 @@ import (
 	"strings"
 )
 
-//	func BucketDelete() {
-//		lists := Bucketlists()
-//		prompt.PrintList("🪣  Available Buckets:", lists)
-//		buckets := prompt.PromptCSV("Enter bucket(s) seperated by , : ")
-//		for _, b := range buckets {
-//			b = strings.ToLower(b)
-//			if err := validate.BucketValidate(b, lists); err != nil {
-//				fmt.Println(styles.ErrorStyle.Render(fmt.Sprintf("Bucket %s is not present", b)))
-//				continue
-//			}
-//			output, err := mcwrapper.Run("rm", config.MinioAlias+"/"+b)
-//			if err != nil {
-//				fmt.Println(styles.ErrorStyle.Render(fmt.Sprintf("Failed to Remove bucket %s : %v", b, err)))
-//				fmt.Println(styles.ErrorStyle.Render(fmt.Sprintln("Command Output", output)))
-//				continue
-//			}
-//			fmt.Println(styles.SuccessStyle.Render(fmt.Sprintf("✅ Bucket '%s' Removed successfully.", b)))
-//			fmt.Println()
-//		}
-//	}
 func BucketDelete() {
 	lists := Bucketlists()
 	prompt.PrintList("🪣  Available Buckets:", lists)

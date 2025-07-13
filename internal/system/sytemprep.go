@@ -2,16 +2,10 @@ package system
 
 import (
 	"fmt"
+	"miniolearn/config"
 	"os"
 	"path/filepath"
 	"runtime"
-)
-
-var (
-	Basedir string
-	Confdir string
-	Logdir  string
-	Bindir  string
 )
 
 func Directories() {
@@ -23,54 +17,54 @@ func Directories() {
 	}
 	switch operatingsystem {
 	case "windows":
-		Basedir = filepath.Join(home, "AppData", "Local", "Minioadmin")
-		Confdir = filepath.Join(Basedir, "conf")
-		Logdir = filepath.Join(Basedir, "logs")
-		Bindir = filepath.Join(Basedir, "bin")
-		os.MkdirAll(Confdir, 0755)
-		os.MkdirAll(Logdir, 0755)
-		os.MkdirAll(Bindir, 0755)
+		config.Basedir = filepath.Join(home, "AppData", "Local", "Minioadmin")
+		config.Confdir = filepath.Join(config.Basedir, "conf")
+		config.Logdir = filepath.Join(config.Basedir, "logs")
+		config.Bindir = filepath.Join(config.Basedir, "bin")
+		os.MkdirAll(config.Confdir, 0755)
+		os.MkdirAll(config.Logdir, 0755)
+		os.MkdirAll(config.Bindir, 0755)
 		switch architecture {
 		case "amd64", "arm64":
 			fmt.Println("You are using ", operatingsystem, "with Architecture", architecture)
-			fmt.Println("Directories created are: ", Basedir, Confdir, Logdir, Bindir)
+			fmt.Println("Directories created are: ", config.Basedir, config.Confdir, config.Logdir, config.Bindir)
 		case "386", "arm":
-			fmt.Println("Directories created are: ", Basedir, Confdir, Logdir, Bindir)
+			fmt.Println("Directories created are: ", config.Basedir, config.Confdir, config.Logdir, config.Bindir)
 			fmt.Println("You are using ", operatingsystem, "with Architecture", architecture)
 		}
 
 	case "linux":
-		Basedir = filepath.Join(home, ".minioadmin")
-		Confdir = filepath.Join(Basedir, "conf")
-		Logdir = filepath.Join(Basedir, "logs")
-		Bindir = filepath.Join(Basedir, "bin")
-		os.MkdirAll(Confdir, 0755)
-		os.MkdirAll(Logdir, 0755)
-		os.MkdirAll(Bindir, 0755)
+		config.Basedir = filepath.Join(home, ".minioadmin")
+		config.Confdir = filepath.Join(config.Basedir, "conf")
+		config.Logdir = filepath.Join(config.Basedir, "logs")
+		config.Bindir = filepath.Join(config.Basedir, "bin")
+		os.MkdirAll(config.Confdir, 0755)
+		os.MkdirAll(config.Logdir, 0755)
+		os.MkdirAll(config.Bindir, 0755)
 		switch architecture {
 		case "amd64", "arm64":
 			fmt.Println("You are using ", operatingsystem, "with Architecture", architecture)
-			fmt.Println("Directories created are: ", Basedir, Confdir, Logdir, Bindir)
+			fmt.Println("Directories created are: ", config.Basedir, config.Confdir, config.Logdir, config.Bindir)
 		case "arm", "386":
 			fmt.Println("You are using ", operatingsystem, "with Architecture", architecture)
-			fmt.Println("Directories created are: ", Basedir, Confdir, Logdir, Bindir)
+			fmt.Println("Directories created are: ", config.Basedir, config.Confdir, config.Logdir, config.Bindir)
 		}
 
 	case "darwin":
-		Basedir = filepath.Join(home, ".minioadmin")
-		Confdir = filepath.Join(Basedir, "conf")
-		Logdir = filepath.Join(Basedir, "logs")
-		Bindir = filepath.Join(Basedir, "bin")
-		os.MkdirAll(Confdir, 0755)
-		os.MkdirAll(Logdir, 0755)
-		os.MkdirAll(Bindir, 0755)
+		config.Basedir = filepath.Join(home, ".minioadmin")
+		config.Confdir = filepath.Join(config.Basedir, "conf")
+		config.Logdir = filepath.Join(config.Basedir, "logs")
+		config.Bindir = filepath.Join(config.Basedir, "bin")
+		os.MkdirAll(config.Confdir, 0755)
+		os.MkdirAll(config.Logdir, 0755)
+		os.MkdirAll(config.Bindir, 0755)
 		switch architecture {
 		case "amd64":
 			fmt.Println("You are using ", operatingsystem, "with Architecture", architecture)
-			fmt.Println("Directories created are: ", Basedir, Confdir, Logdir, Bindir)
+			fmt.Println("Directories created are: ", config.Basedir, config.Confdir, config.Logdir, config.Bindir)
 		case "arm64":
 			fmt.Println("You are using ", operatingsystem, "with Architecture", architecture)
-			fmt.Println("Directories created are: ", Basedir, Confdir, Logdir, Bindir)
+			fmt.Println("Directories created are: ", config.Basedir, config.Confdir, config.Logdir, config.Bindir)
 		}
 	}
 }

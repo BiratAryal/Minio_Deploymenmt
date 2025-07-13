@@ -3,7 +3,7 @@ package bin
 import (
 	_ "embed"
 	"fmt"
-	"miniolearn/internal/system"
+	"miniolearn/config"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -73,7 +73,7 @@ func ExtractMcBinary() (string, error) {
 	}
 
 	// Temp file location
-	tempDir := system.Bindir
+	tempDir := config.Bindir
 	fullPath := filepath.Join(tempDir, filename)
 
 	// Write binary

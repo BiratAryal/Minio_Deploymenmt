@@ -2,6 +2,10 @@ package bubbletea
 
 import (
 	"fmt"
+	"miniolearn/internal/bucket"
+	"miniolearn/internal/policy"
+	"miniolearn/internal/prompt"
+	"miniolearn/internal/system"
 	"miniolearn/internal/user"
 	"os"
 	"strings"
@@ -10,19 +14,6 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 )
-
-// ───── Sample Action Functions ─────
-func listUsers() []string {
-	return []string{"alice", "bob", "charlie", "dora"}
-}
-
-func viewPermissions() []string {
-	return []string{"alice: admin", "bob: read-only", "charlie: write"}
-}
-
-func listBuckets() []string {
-	return []string{"photos", "backups", "logs"}
-}
 
 // ───── Model ─────
 type model struct {
@@ -161,8 +152,27 @@ func BubbleCall() func() {
 	}
 	actions := map[string]func(){
 		"List Users": func() {
-			for _, u := range user.GetUserList() {
-				fmt.Println(" -", u)
+			users := user.GetUserList()
+			if len(users) == 0 {
+				fmt.Println("❌ No users found.")
+			} else {
+				prompt.PrintList("👤 Username", users)
+			}
+		},
+		"List Buckets": func() {
+			lists := bucket.Bucketlists()
+			if len(lists) == 0 {
+				fmt.Println("❌ No buckets found.")
+			} else {
+				prompt.PrintList("🪣 Available Buckets", lists)
+			}
+		},
+		"List Policies": func() {
+			lists := policy.GetPolicyList()
+			if len(lists) == 0 {
+				fmt.Println("❌ No policies found.")
+			} else {
+				prompt.PrintList("📜 Policies", lists)
 			}
 		},
 		"Details of User":   user.UserDetails,
@@ -171,6 +181,9 @@ func BubbleCall() func() {
 		"Enable User":       user.UserEnable,
 		"Disable User":      user.UserDisable,
 		"Remove User":       user.UserDelete,
+		"Create Bucket":     bucket.BucketCreate,
+		"Remove Bucket":     bucket.BucketDelete,
+		"Show Banner":       system.OwnerBanner,
 	}
 	m := model{
 		Tabs:       tabs,

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"miniolearn/bin"
 	"miniolearn/bubbletea"
 	"miniolearn/config"
 	"miniolearn/internal/prompt"
@@ -10,6 +11,9 @@ import (
 )
 
 func main() {
+	system.Directories()
+	bin.BinaryFiles()
+	bin.ExtractMcBinary()
 	config.MinioAlias = "privateminio"
 	system.OwnerBanner()
 	for {

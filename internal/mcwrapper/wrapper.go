@@ -2,13 +2,18 @@ package mcwrapper
 
 import (
 	"fmt"
+	"miniolearn/bin"
 	"os/exec"
 	"strings"
 )
 
 // Run runs general mc commands like mc ls, mc mb, etc.
 func Run(args ...string) (string, error) {
-	cmd := exec.Command("mc", args...)
+	mcPath, err := bin.ExtractMcBinary()
+	if err != nil {
+		return "", err
+	}
+	cmd := exec.Command(mcPath, args...)
 	output, err := cmd.CombinedOutput()
 	outStr := strings.TrimSpace(string(output))
 	if err != nil {

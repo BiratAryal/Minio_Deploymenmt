@@ -148,7 +148,7 @@ func BubbleCall() func() {
 		"Bucket Management":    {"List Buckets", "Create Bucket", "Remove Bucket"},
 		"Policy Management":    {"List Policies", "Create Readonly Policy", "Create Read-Write Policy", "Create Full Access Policy", "Assign Policy to User", "Remove Policy"},
 		"System Configuration": {"Setup MinIO Alias", "Prepare System", "Verify Directories", "Run Validation"},
-		"Misc":                 {"Show Banner", "Bubble"},
+		"Misc":                 {"Show Banner", "System Prepare"},
 	}
 	actions := map[string]func(){
 		"List Users": func() {

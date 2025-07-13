@@ -2,7 +2,6 @@ package bubbletea
 
 import (
 	"fmt"
-	"miniolearn/config"
 	"miniolearn/internal/bucket"
 	"miniolearn/internal/policy"
 	"miniolearn/internal/prompt"
@@ -185,7 +184,7 @@ func BubbleCall() func() {
 		"Create Bucket":     bucket.BucketCreate,
 		"Remove Bucket":     bucket.BucketDelete,
 		"Show Banner":       system.OwnerBanner,
-		"Initial Setup":     config.InitialSetup,
+		"Initial Setup":     system.InitialSetup,
 	}
 	m := model{
 		Tabs:       tabs,

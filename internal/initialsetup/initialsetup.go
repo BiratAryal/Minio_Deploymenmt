@@ -1,8 +1,8 @@
-package config
+package initial
 
 import (
 	"fmt"
-	// "miniolearn/internal/mcwrapper"
+	"miniolearn/internal/mcwrapper"
 	"miniolearn/internal/prompt"
 	"miniolearn/internal/styles"
 	"miniolearn/validate"
@@ -13,7 +13,7 @@ var (
 	ServerAlias []string
 )
 
-func InitialSetup() {
+func AliasSetup() {
 	ServerAlias = prompt.PromptCSV("Enter the minio server alias(es) separated by ',' : ")
 	for _, a := range ServerAlias {
 		if err := validate.CheckUsername(a); err != nil {
@@ -39,17 +39,17 @@ func InitialSetup() {
 			break // connection successful
 		}
 
-		// username := prompt.PromptLine(fmt.Sprintf("Enter Username for '%s':", a))
-		// password := prompt.PromptLine(fmt.Sprintf("Enter Password for '%s':", a))
-		// endpoint := fmt.Sprintf("%s://%s:%s", ServerProtocol, ServerIP, ServerPort)
+		username := prompt.PromptLine(fmt.Sprintf("Enter Username for '%s':", a))
+		password := prompt.PromptLine(fmt.Sprintf("Enter Password for '%s':", a))
+		endpoint := fmt.Sprintf("%s://%s:%s", ServerProtocol, ServerIP, ServerPort)
 
-		// fmt.Println(" -", a)
-		// output, err := mcwrapper.Admin("alias", "set", a, endpoint, username, password)
-		// if err != nil {
-		// 	fmt.Printf("Failed to authenticate '%s': %v\n", a, err)
-		// 	fmt.Println("Command output:", output)
-		// 	continue
-		// }
+		fmt.Println(" -", a)
+		output, err := mcwrapper.Admin("alias", "set", a, endpoint, username, password)
+		if err != nil {
+			fmt.Printf("Failed to authenticate '%s': %v\n", a, err)
+			fmt.Println("Command output:", output)
+			continue
+		}
 		fmt.Println(styles.SuccessStyle.Render(fmt.Sprintf("New Alias %s is created \n", a)))
 		fmt.Println()
 	}

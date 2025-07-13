@@ -3,6 +3,7 @@ package system
 import (
 	"fmt"
 	"miniolearn/config"
+	initial "miniolearn/internal/initialsetup"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -24,7 +25,7 @@ func InitialSetup() {
 	}
 	info, err := os.Stat(config.DirPath)
 	if os.IsNotExist(err) {
-		config.InitialSetup()
+		initial.AliasSetup()
 	} else if err != nil {
 		fmt.Println("Error checking directory:", err)
 	} else if info.IsDir() {

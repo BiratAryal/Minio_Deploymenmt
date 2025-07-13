@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"miniolearn/cmd"
+	"miniolearn/bubbletea"
 	"miniolearn/config"
 	"miniolearn/internal/prompt"
 	"miniolearn/internal/system"
@@ -22,7 +22,8 @@ func main() {
 		switch choice[0] {
 		case 'Y', 'y':
 			utils.ClearScreen()
-			cmd.PrintMainMenu()
+			bubbletea.BubbleCall()()
+			// cmd.PrintMainMenu()
 			fmt.Println()
 			continue
 		case 'N', 'n':

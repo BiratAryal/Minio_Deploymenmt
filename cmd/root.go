@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"miniolearn/bubbletea"
 	"miniolearn/internal/bucket"
 	"miniolearn/internal/policy"
 	"miniolearn/internal/prompt"
@@ -66,6 +67,7 @@ func PrintMainMenu() {
 	miscMgmt := lipgloss.JoinVertical(lipgloss.Left,
 		styles.SectionStyle.Render("🎨 Miscellaneous"),
 		styles.ItemStyle.Render(" 21) Show Banner"),
+		styles.ItemStyle.Render(" 22) Bubble"),
 	)
 	fmt.Println(styles.BoxStyle.Render(miscMgmt))
 
@@ -123,6 +125,8 @@ func PrintMainMenu() {
 		}
 	case 21:
 		system.OwnerBanner()
+	case 22:
+		bubbletea.BubbleCall()
 	case 0:
 		utils.ClearScreen()
 		fmt.Println(styles.QuitBoxStyle.Render("👋 Exiting... Goodbye!"))

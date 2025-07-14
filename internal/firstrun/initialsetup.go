@@ -1,4 +1,4 @@
-package initial
+package firstrun
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ var (
 	ServerAlias []string
 )
 
-func AliasSetup() {
+func InitialSetup() {
 	ServerAlias = prompt.PromptCSV("Enter the minio server alias(es) separated by ',' : ")
 	for _, a := range ServerAlias {
 		if err := validate.CheckUsername(a); err != nil {
@@ -24,7 +24,7 @@ func AliasSetup() {
 		var ServerIP, ServerPort, ServerProtocol string
 
 		for {
-			ServerPort = prompt.PromptLine(fmt.Sprintf("Enter the port for '%s':", a))
+			ServerPort = prompt.PromptLine(fmt.Sprintf("Enter the port for API [9000]'%s':", a))
 			ServerIP = prompt.PromptLine(fmt.Sprintf("Enter IP for '%s':", a))
 			ServerProtocol = prompt.PromptLine(fmt.Sprintf("Enter the protocol [HTTP/HTTPS] for '%s':", a))
 			ServerProtocol = strings.ToLower(ServerProtocol)

@@ -2,7 +2,9 @@ package bubbletea
 
 import (
 	"fmt"
+	"miniolearn/config"
 	"miniolearn/internal/bucket"
+	"miniolearn/internal/parsing"
 	"miniolearn/internal/policy"
 	"miniolearn/internal/prompt"
 	"miniolearn/internal/system"
@@ -93,6 +95,19 @@ var (
 // ───── View ─────
 func (m model) View() string {
 	var doc strings.Builder
+
+	// 🔹 Show current MinIO alias if set
+	if config.MinioAlias != "" {
+		header := lipgloss.NewStyle().
+			Bold(true).
+			Foreground(lipgloss.Color("205")).
+			Background(lipgloss.Color("236")).
+			Padding(0, 1).
+			Render(fmt.Sprintf("🔗 Connected to MinIO Alias: %s", config.MinioAlias))
+
+		doc.WriteString(header + "\n\n")
+	}
+
 	var renderedTabs []string
 	for i, t := range m.Tabs {
 		style := inactiveTabStyle
@@ -148,7 +163,7 @@ func BubbleCall() func() {
 		"Bucket Management":    {"List Buckets", "Create Bucket", "Remove Bucket"},
 		"Policy Management":    {"List Policies", "Create Readonly Policy", "Create Read-Write Policy", "Create Full Access Policy", "Assign Policy to User", "Remove Policy"},
 		"System Configuration": {"Setup MinIO Alias", "Prepare System", "Verify Directories", "Run Validation"},
-		"Misc":                 {"Show Banner", "Initial Setup"},
+		"Misc":                 {"Show Banner", "Json Data"},
 	}
 	actions := map[string]func(){
 		"List Users": func() {
@@ -184,7 +199,7 @@ func BubbleCall() func() {
 		"Create Bucket":     bucket.BucketCreate,
 		"Remove Bucket":     bucket.BucketDelete,
 		"Show Banner":       system.OwnerBanner,
-		"Initial Setup":     system.InitialSetup,
+		"Json Data":         parsing.ParseJson,
 	}
 	m := model{
 		Tabs:       tabs,

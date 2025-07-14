@@ -1,15 +1,14 @@
-package system
+package firstrun
 
 import (
 	"fmt"
 	"miniolearn/config"
-	initial "miniolearn/internal/aliassetup"
 	"os"
 	"path/filepath"
 	"runtime"
 )
 
-func InitialSetup() {
+func McDirCheck() {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		fmt.Println("Error getting home directory:", err)
@@ -25,7 +24,7 @@ func InitialSetup() {
 	}
 	info, err := os.Stat(config.DirPath)
 	if os.IsNotExist(err) {
-		initial.AliasSetup()
+		InitialSetup()
 	} else if err != nil {
 		fmt.Println("Error checking directory:", err)
 	} else if info.IsDir() {

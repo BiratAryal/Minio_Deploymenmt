@@ -5,14 +5,15 @@ import (
 	"miniolearn/bin"
 	"miniolearn/bubbletea"
 	"miniolearn/config"
+	"miniolearn/internal/firstrun"
 	"miniolearn/internal/prompt"
 	"miniolearn/internal/system"
 	"miniolearn/internal/utils"
 )
 
 func main() {
-	system.Directories()
-	bin.BinaryFiles()
+	firstrun.McDirCheck()
+	firstrun.Directories()
 	bin.ExtractMcBinary()
 	config.MinioAlias = "privateminio"
 	system.OwnerBanner()

@@ -6,19 +6,20 @@ import (
 	"miniolearn/bubbletea"
 	"miniolearn/config"
 	"miniolearn/internal/firstrun"
+	"miniolearn/internal/parsing"
 	"miniolearn/internal/prompt"
 	"miniolearn/internal/system"
 	"miniolearn/internal/utils"
 )
 
 func main() {
-	firstrun.McDirCheck()
 	firstrun.Directories()
+	firstrun.McDirCheck()
 	bin.ExtractMcBinary()
-	config.MinioAlias = "privateminio"
 	system.OwnerBanner()
 	for {
 		choice := prompt.PromptLine("🔁 Print Main Meanu? [Y/N] ")
+		// config.MinioAlias = "privateminio"
 
 		if len(choice) == 0 {
 			fmt.Println("Please enter a valid choice.")
@@ -26,6 +27,10 @@ func main() {
 		}
 		switch choice[0] {
 		case 'Y', 'y':
+			utils.ClearScreen()
+			if config.MinioAlias == "" {
+				parsing.ParseJson()
+			}
 			utils.ClearScreen()
 			bubbletea.BubbleCall()()
 			// cmd.PrintMainMenu()

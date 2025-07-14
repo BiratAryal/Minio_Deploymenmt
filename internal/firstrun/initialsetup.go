@@ -44,7 +44,7 @@ func InitialSetup() {
 		endpoint := fmt.Sprintf("%s://%s:%s", ServerProtocol, ServerIP, ServerPort)
 
 		fmt.Println(" -", a)
-		output, err := mcwrapper.Admin("alias", "set", a, endpoint, username, password)
+		output, err := mcwrapper.Run("alias", "set", a, endpoint, username, password)
 		if err != nil {
 			fmt.Printf("Failed to authenticate '%s': %v\n", a, err)
 			fmt.Println("Command output:", output)

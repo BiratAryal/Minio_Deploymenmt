@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"miniolearn/config"
 	"miniolearn/internal/bucket"
-	"miniolearn/internal/parsing"
+	"miniolearn/internal/firstrun"
 	"miniolearn/internal/policy"
 	"miniolearn/internal/prompt"
 	"miniolearn/internal/system"
@@ -163,7 +163,7 @@ func BubbleCall() func() {
 		"Bucket Management":    {"List Buckets", "Create Bucket", "Remove Bucket"},
 		"Policy Management":    {"List Policies", "Create Readonly Policy", "Create Read-Write Policy", "Create Full Access Policy", "Assign Policy to User", "Remove Policy"},
 		"System Configuration": {"Setup MinIO Alias", "Prepare System", "Verify Directories", "Run Validation"},
-		"Misc":                 {"Show Banner", "Json Data"},
+		"Misc":                 {"Show Banner", "Add Server"},
 	}
 	actions := map[string]func(){
 		"List Users": func() {
@@ -190,16 +190,19 @@ func BubbleCall() func() {
 				prompt.PrintList("📜 Policies", lists)
 			}
 		},
-		"Details of User":   user.UserDetails,
-		"Create User":       user.CreateUser,
-		"Set User Password": user.CreateUser,
-		"Enable User":       user.UserEnable,
-		"Disable User":      user.UserDisable,
-		"Remove User":       user.UserDelete,
-		"Create Bucket":     bucket.BucketCreate,
-		"Remove Bucket":     bucket.BucketDelete,
-		"Show Banner":       system.OwnerBanner,
-		"Json Data":         parsing.ParseJson,
+		"Details of User":    user.UserDetails,
+		"Create User":        user.CreateUser,
+		"Set User Password":  user.CreateUser,
+		"Enable User":        user.UserEnable,
+		"Disable User":       user.UserDisable,
+		"Remove User":        user.UserDelete,
+		"Create Bucket":      bucket.BucketCreate,
+		"Remove Bucket":      bucket.BucketDelete,
+		"Setup MinIO Alias":  firstrun.InitialSetup,
+		"Prepare System":     firstrun.Directories,
+		"Verify Directories": firstrun.McDirCheck,
+		"Show Banner":        system.OwnerBanner,
+		"Add Server":         firstrun.InitialSetup,
 	}
 	m := model{
 		Tabs:       tabs,

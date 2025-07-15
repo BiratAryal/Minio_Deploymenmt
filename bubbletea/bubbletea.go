@@ -190,19 +190,28 @@ func BubbleCall() func() {
 				prompt.PrintList("📜 Policies", lists)
 			}
 		},
-		"Details of User":    user.UserDetails,
-		"Create User":        user.CreateUser,
-		"Set User Password":  user.CreateUser,
-		"Enable User":        user.UserEnable,
-		"Disable User":       user.UserDisable,
-		"Remove User":        user.UserDelete,
-		"Create Bucket":      bucket.BucketCreate,
-		"Remove Bucket":      bucket.BucketDelete,
+		// User Management
+		"Details of User":   user.UserDetails,
+		"Create User":       user.CreateUser,
+		"Set User Password": user.CreateUser,
+		"Enable User":       user.UserEnable,
+		"Disable User":      user.UserDisable,
+		"Remove User":       user.UserDelete,
+		// Bucket Management
+		"Create Bucket": bucket.BucketCreate,
+		"Remove Bucket": bucket.BucketDelete,
+		// Policy Management
+		"Create Readonly Policy":    policy.ReadOnly,
+		"Create Read-Write Policy":  policy.ReadWrite,
+		"Create Full Access Policy": policy.ReadWriteDelete,
+		"Assign Policy to User":     policy.AssignPolicy,
+		// System Configuration
 		"Setup MinIO Alias":  firstrun.InitialSetup,
 		"Prepare System":     firstrun.Directories,
 		"Verify Directories": firstrun.McDirCheck,
-		"Show Banner":        system.OwnerBanner,
-		"Add Server":         firstrun.InitialSetup,
+		// Misc
+		"Show Banner": system.OwnerBanner,
+		"Add Server":  firstrun.InitialSetup,
 	}
 	m := model{
 		Tabs:       tabs,

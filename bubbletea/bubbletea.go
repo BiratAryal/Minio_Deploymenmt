@@ -5,6 +5,7 @@ import (
 	"miniolearn/config"
 	"miniolearn/internal/bucket"
 	"miniolearn/internal/firstrun"
+	"miniolearn/internal/helper"
 	"miniolearn/internal/policy"
 	"miniolearn/internal/prompt"
 	"miniolearn/internal/system"
@@ -139,7 +140,7 @@ func (m model) View() string {
 
 	for i, item := range items {
 		if i == m.subCursor {
-			contentLines = append(contentLines, highlightStyle.Render("> "+item))
+			contentLines = append(contentLines, highlightStyle.Render("=> "+item))
 		} else {
 			contentLines = append(contentLines, "  "+item)
 		}
@@ -161,7 +162,7 @@ func BubbleCall() func() {
 	tabContent := map[string][]string{
 		"User Management":      {"List Users", "Details of User", "Create User", "Set User Password", "Enable User", "Disable User", "Remove User"},
 		"Bucket Management":    {"List Buckets", "Create Bucket", "Remove Bucket"},
-		"Policy Management":    {"List Policies", "Create Readonly Policy", "Create Read-Write Policy", "Create Full Access Policy", "Assign Policy to User", "Remove Policy"},
+		"Policy Management":    {"List Policies", "Create Readonly Policy", "Create Read-Write Policy", "Create Full Access Policy", "Create All above policies", "Assign Policy to User", "Remove Policy"},
 		"System Configuration": {"Setup MinIO Alias", "Prepare System", "Verify Directories", "Run Validation"},
 		"Misc":                 {"Show Banner", "Add Server"},
 	}
@@ -201,10 +202,57 @@ func BubbleCall() func() {
 		"Create Bucket": bucket.BucketCreate,
 		"Remove Bucket": bucket.BucketDelete,
 		// Policy Management
-		"Create Readonly Policy":    policy.ReadOnly,
-		"Create Read-Write Policy":  policy.ReadWrite,
-		"Create Full Access Policy": policy.ReadWriteDelete,
-		"Assign Policy to User":     policy.AssignPolicy,
+		"Create Readonly Policy": func() {
+			buckets := bucket.Bucketlists()
+			if len(buckets) == 0 {
+				fmt.Println("❌ No buckets found.")
+				return
+			}
+			selectedBucket := prompt.PromptSelectFromList("🪣 Available Buckets", buckets)
+			helper.PolicyToBucket(selectedBucket, "readonly")
+		},
+		"Create Read-Write Policy": func() {
+			buckets := bucket.Bucketlists()
+			if len(buckets) == 0 {
+				fmt.Println("❌ No buckets found.")
+				return
+			}
+			selectedBucket := prompt.PromptSelectFromList("🪣 Available Buckets", buckets)
+			helper.PolicyToBucket(selectedBucket, "readwrite")
+		},
+		"Create Full Access Policy": func() {
+			buckets := bucket.Bucketlists()
+			if len(buckets) == 0 {
+				fmt.Println("❌ No buckets found.")
+				return
+			}
+			selectedBucket := prompt.PromptSelectFromList("🪣 Available Buckets", buckets)
+			helper.PolicyToBucket(selectedBucket, "readwritedelete")
+		},
+		"Create All above policies": func() {
+			buckets := bucket.Bucketlists()
+			if len(buckets) == 0 {
+				fmt.Println("❌ No buckets found.")
+				return
+			}
+			selectedBucket := prompt.PromptSelectFromList("🪣 Available Buckets", buckets)
+			helper.PolicyToBucket(selectedBucket, "all")
+		},
+		"Assign Policy to User": func() {
+			users := user.GetUserList()
+			policies := policy.GetPolicyList()
+			if len(users) == 0 {
+				fmt.Println("❌ No users found.")
+				return
+			}
+			if len(policies) == 0 {
+				fmt.Println("❌ No policies found.")
+				return
+			}
+			selectedUser := prompt.PromptSelectFromList("👤 Username", users)
+			selectedPolicy := prompt.PromptSelectFromList("📜 Policies", policies)
+			helper.PolicyToUser(selectedPolicy, selectedUser)
+		},
 		// System Configuration
 		"Setup MinIO Alias":  firstrun.InitialSetup,
 		"Prepare System":     firstrun.Directories,

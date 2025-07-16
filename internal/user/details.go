@@ -5,6 +5,7 @@ import (
 	"miniolearn/config"
 	"miniolearn/internal/mcwrapper"
 	"miniolearn/internal/prompt"
+	"miniolearn/internal/styles"
 )
 
 func UserDetails() {
@@ -19,7 +20,7 @@ func UserDetails() {
 			if err != nil {
 				fmt.Printf("The User %s faced issues due to %s", userdetail, err)
 			} else {
-				fmt.Println(userdetail)
+				fmt.Println(styles.ItemStyle.Render(userdetail))
 				fmt.Println()
 			}
 		} else {
